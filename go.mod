@@ -1,4 +1,4 @@
-module github.com/joonix/log
+module github.com/innodv/log
 
 go 1.12
 
