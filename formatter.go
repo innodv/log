@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+	"github.com/innodv/errors"
 )
 
 // Format configuration of the logrus formatter output.
@@ -50,6 +51,8 @@ func (f *Formatter) Format(entry *logrus.Entry) ([]byte, error) {
 	data := make(logrus.Fields, len(entry.Data)+3)
 	for k, v := range entry.Data {
 		switch v := v.(type) {
+		case errors.Error:
+			data[k] = v
 		case error:
 			// Otherwise errors are ignored by `encoding/json`
 			// https://github.com/Sirupsen/logrus/issues/137
